@@ -5,6 +5,12 @@ const path = require('path')
 
 module.exports = {
     mode: 'development',
+    devServer: {
+        port: 3000,
+        hot: true,
+        open: false,
+        historyApiFallback: true,
+    },
     resolve: {
         extensions: ['.js', '.jsx', '.json'],
         alias: {
@@ -19,7 +25,6 @@ module.exports = {
     },
     entry: [
         './src/webpack-public-path',
-        'webpack-hot-middleware/client?reload=true',
         path.resolve(__dirname, './src/index.js'),
     ],
     devtool: 'eval-source-map',
@@ -43,12 +48,15 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.(jpe?g|png|gif|ico)$/i,
+                test: /\.(png|jpe?g|gif|ico)$/i,
                 use: [
                     {
                         loader: 'file-loader',
                         options: {
                             name: '[name].[ext]',
+                            outputPath: 'images',
+                            publicPath: '/images',
+                            esModule: false,
                         },
                     },
                 ],

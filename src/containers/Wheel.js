@@ -15,7 +15,7 @@ class Wheel extends Component {
 
     spinInterval = null
 
-    componentDidUpdate () {
+    componentDidUpdate() {
         const { isSpinning } = this.props
 
         if (isSpinning) {
@@ -27,11 +27,14 @@ class Wheel extends Component {
 
     startSpinning = () => {
         if (!this.spinInterval) {
-            this.spinInterval = setInterval(() => {
-                this.setState({
-                    fakeIconIndex: getRandomInt(0, 3),
-                })
-            }, 50 + getRandomInt(0, 100))
+            this.spinInterval = setInterval(
+                () => {
+                    this.setState({
+                        fakeIconIndex: getRandomInt(0, 3),
+                    })
+                },
+                50 + getRandomInt(0, 100)
+            )
         }
     }
 
@@ -43,20 +46,16 @@ class Wheel extends Component {
         }
     }
 
-    renderCurrentIcon () {
+    renderCurrentIcon() {
         const { iconIndex } = this.props
 
-        return (
-            <Icon name={this.iconsNames[iconIndex]} />
-        )
+        return <Icon name={this.iconsNames[iconIndex]} />
     }
 
     renderFakeIcon = () => {
         const { fakeIconIndex } = this.state
 
-        return (
-            <Icon name={this.iconsNames[fakeIconIndex]} />
-        )
+        return <Icon name={this.iconsNames[fakeIconIndex]} />
     }
 
     render() {
@@ -65,7 +64,9 @@ class Wheel extends Component {
         return (
             <div className={styles.wheel}>
                 <div className={styles.inner}>
-                    {isSpinning ? this.renderFakeIcon() : this.renderCurrentIcon()}
+                    {isSpinning
+                        ? this.renderFakeIcon()
+                        : this.renderCurrentIcon()}
                 </div>
             </div>
         )

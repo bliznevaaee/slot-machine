@@ -19,7 +19,6 @@ module.exports = {
     },
     entry: [
         './src/webpack-public-path',
-        'react-hot-loader/patch',
         'webpack-hot-middleware/client?reload=true',
         path.resolve(__dirname, './src/index.js'),
     ],

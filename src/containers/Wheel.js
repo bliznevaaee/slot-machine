@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Icon } from 'Components/'
 
-import styles from 'Styles/Wheel.sass'
+import styles from 'Styles/Wheel.module.sass'
 import { getRandomInt } from 'Utils/customUtils'
 
 class Wheel extends Component {

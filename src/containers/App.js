@@ -5,16 +5,16 @@ import { GameInfo, Grid, Buttons } from 'Containers/'
 
 import { resetWheels } from 'Actions/wheelActions'
 
-import styles from 'Styles/App.sass'
+import styles from 'Styles/App.module.sass'
 
 class App extends Component {
-    componentDidMount () {
+    componentDidMount() {
         const { initWheels } = this.props
 
         initWheels()
     }
 
-    render () {
+    render() {
         return (
             <div className={styles.container}>
                 <GameInfo />
@@ -29,7 +29,7 @@ App.propTypes = {
     initWheels: PropTypes.func.isRequired,
 }
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
     return {
         initWheels: () => {
             dispatch(resetWheels())

@@ -1,19 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import styles from 'Styles/Button.sass'
+import styles from 'Styles/Button.module.sass'
 
-const Button = props => {
-    const {
-        title,
-        ...rest
-    } = props
+const Button = (props) => {
+    const { title, ...rest } = props
 
     return (
-        <button
-            type="button"
-            className={styles.button}
-            {...rest}>
+        <button type="button" className={styles.button} {...rest}>
             {title}
         </button>
     )

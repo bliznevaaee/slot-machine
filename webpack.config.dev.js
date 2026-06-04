@@ -48,18 +48,8 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.(png|jpe?g|gif|ico)$/i,
-                use: [
-                    {
-                        loader: 'file-loader',
-                        options: {
-                            name: '[name].[ext]',
-                            outputPath: 'images',
-                            publicPath: '/images',
-                            esModule: false,
-                        },
-                    },
-                ],
+                test: /\.(png|jpe?g|gif|svg)$/i,
+                type: 'asset/resource',
             },
             {
                 test: /\.(js|jsx)$/,
@@ -70,25 +60,25 @@ module.exports = {
             },
 
             {
-                test: /\.(css|scss|sass)$/,
+                test: /\.module\.(scss|sass)$/,
                 use: [
                     'style-loader',
                     {
                         loader: 'css-loader',
                         options: {
-                            modules: true,
-                        },
-                    },
-                    {
-                        loader: 'postcss-loader',
-                        options: {
-                            postcssOptions: {
-                                plugins: [require('autoprefixer')],
+                            modules: {
+                                localIdentName: '[local]__[hash:base64:5]',
                             },
+                            esModule: false,
                         },
                     },
                     'sass-loader',
                 ],
+            },
+            {
+                test: /\.(scss|sass)$/,
+                exclude: /\.module\.(scss|sass)$/,
+                use: ['style-loader', 'css-loader', 'sass-loader'],
             },
         ],
     },

@@ -4,8 +4,9 @@ const autoprefixer = require('autoprefixer')
 const path = require('path')
 
 module.exports = {
+    mode: 'development',
     resolve: {
-        extensions: ['*', '.js', '.jsx', '.json'],
+        extensions: ['.js', '.jsx', '.json'],
         alias: {
             Styles: path.resolve(__dirname, './src/styles'),
             Components: path.resolve(__dirname, './src/components'),
@@ -30,10 +31,6 @@ module.exports = {
         filename: 'bundle.js',
     },
     plugins: [
-        new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify('development'),
-            __DEV__: true,
-        }),
         new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({
             template: 'src/index.ejs',
@@ -42,18 +39,6 @@ module.exports = {
                 collapseWhitespace: true,
             },
             inject: true,
-        }),
-        new webpack.LoaderOptionsPlugin({
-            minimize: false,
-            debug: true,
-            noInfo: true, // set to false to see a list of every file being bundled.
-            options: {
-                sassLoader: {
-                    includePaths: [path.resolve(__dirname, 'src', 'scss')],
-                },
-                context: '/',
-                postcss: () => [autoprefixer],
-            },
         }),
     ],
     module: {
@@ -70,26 +55,32 @@ module.exports = {
                 ],
             },
             {
-                test: /\.js?$/,
+                test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
-                loaders: ['babel-loader'],
+                use: {
+                    loader: 'babel-loader',
+                },
             },
+
             {
                 test: /\.(css|scss|sass)$/,
-                loaders: [
+                use: [
                     'style-loader',
                     {
-                        loader: 'css-loader?sourceMap',
+                        loader: 'css-loader',
                         options: {
                             modules: true,
-                            importLoaders: 1,
-                            localIdentName: '[local]__[hash:base64:5]',
-                            camelCase: true,
-                            minimize: false,
                         },
                     },
-                    'postcss-loader',
-                    'sass-loader?sourceMap',
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            postcssOptions: {
+                                plugins: [require('autoprefixer')],
+                            },
+                        },
+                    },
+                    'sass-loader',
                 ],
             },
         ],
